@@ -1,0 +1,21 @@
+<!-- tasks/templates/task_list.html -->
+{% load custom_filters %}
+
+{% for task in tasks %}
+  <div>
+    <p>{{ task.question }}</p>
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" name="answer_{{ task.id }}">
+      <button type="submit">Submit</button>
+      {% if results %}
+        {% if results|get_item:task.id %}
+          <span style="color: green;">✔</span>
+        {% else %}
+          <span style="color: red;">✖</span>
+        {% endif %}
+      {% endif %}
+    </form>
+  </div>
+{% endfor %}
+
